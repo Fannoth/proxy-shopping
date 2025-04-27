@@ -1,3 +1,4 @@
+// proxy.js
 export default async function handler(req, res) {
   const { url } = req.query;
 
@@ -18,6 +19,10 @@ export default async function handler(req, res) {
     const data = await response.arrayBuffer();
     const buffer = Buffer.from(data);
 
+    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    
     res.status(response.status);
     res.setHeader('Content-Type', response.headers.get('Content-Type') || 'application/octet-stream');
     res.send(buffer);
